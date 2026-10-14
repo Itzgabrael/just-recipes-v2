@@ -1,0 +1,1209 @@
+@import "tailwindcss";
+
+/* =========================================================
+   TAILWIND DARK MODE
+   Makes dark: classes respond to <html class="dark">
+========================================================= */
+
+/* stylelint-disable-next-line at-rule-no-unknown */
+@custom-variant dark (&:where(.dark, .dark *));
+
+
+/* =========================================================
+   GLOBAL THEME VARIABLES
+========================================================= */
+
+:root {
+  --page-bg: #ffffff;
+  --surface: #ffffff;
+  --surface-soft: #f9fafb;
+  --surface-muted: #f3f4f6;
+
+  --text-primary: #111827;
+  --text-secondary: #4b5563;
+  --text-muted: #6b7280;
+  --text-subtle: #9ca3af;
+
+  --border: #e5e7eb;
+  --border-strong: #d1d5db;
+
+  --green: #16a34a;
+  --green-bright: #22c55e;
+
+  --shadow-color: rgba(0, 0, 0, 0.08);
+}
+
+html.dark {
+  --page-bg: #111827;
+  --surface: #1f2937;
+  --surface-soft: #1a2433;
+  --surface-muted: #374151;
+
+  --text-primary: #f9fafb;
+  --text-secondary: #d1d5db;
+  --text-muted: #9ca3af;
+  --text-subtle: #6b7280;
+
+  --border: #374151;
+  --border-strong: #4b5563;
+
+  --green: #4ade80;
+  --green-bright: #22c55e;
+
+  --shadow-color: rgba(0, 0, 0, 0.3);
+}
+
+
+/* =========================================================
+   GLOBAL PAGE
+========================================================= */
+
+html {
+  background-color: var(--page-bg);
+  color: var(--text-primary);
+  transition:
+    background-color 0.35s ease,
+    color 0.25s ease;
+}
+
+body {
+  margin: 0;
+  background-color: var(--page-bg);
+  color: var(--text-primary);
+
+  transition:
+    background-color 0.35s ease,
+    color 0.25s ease;
+}
+
+
+/* Prevent horizontal overflow from mobile UI */
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+
+/* =========================================================
+   GLOBAL THEME TRANSITIONS
+========================================================= */
+
+body,
+body * {
+  transition:
+    background-color 0.35s ease,
+    border-color 0.35s ease,
+    color 0.25s ease,
+    box-shadow 0.35s ease;
+}
+
+
+/* =========================================================
+   COMMON TAILWIND DARK OVERRIDES
+   These help older components that were built before
+   dark mode was introduced.
+========================================================= */
+
+html.dark .bg-white {
+  background-color: #1f2937 !important;
+}
+
+html.dark .bg-gray-50 {
+  background-color: #1a2433 !important;
+}
+
+html.dark .bg-gray-100 {
+  background-color: #374151 !important;
+}
+
+html.dark .bg-gray-200 {
+  background-color: #4b5563 !important;
+}
+
+html.dark .border-gray-100 {
+  border-color: #374151 !important;
+}
+
+html.dark .border-gray-200 {
+  border-color: #374151 !important;
+}
+
+html.dark .border-gray-300 {
+  border-color: #4b5563 !important;
+}
+
+html.dark .border-gray-400 {
+  border-color: #6b7280 !important;
+}
+
+
+/* =========================================================
+   TEXT CONTRAST
+========================================================= */
+
+html.dark .text-gray-900 {
+  color: #f9fafb !important;
+}
+
+html.dark .text-gray-800 {
+  color: #f3f4f6 !important;
+}
+
+html.dark .text-gray-700 {
+  color: #e5e7eb !important;
+}
+
+html.dark .text-gray-600 {
+  color: #d1d5db !important;
+}
+
+html.dark .text-gray-500 {
+  color: #9ca3af !important;
+}
+
+html.dark .text-gray-400 {
+  color: #9ca3af !important;
+}
+
+html.dark button:hover .text-gray-600 {
+  color: #ef4444 !important;
+}
+html.dark .favorite-button:hover {
+  color: #ef4444 !important;
+}
+
+/* =========================================================
+   FORM ELEMENTS
+========================================================= */
+
+input,
+textarea,
+select {
+  color: var(--text-primary);
+}
+
+html.dark input,
+html.dark textarea,
+html.dark select {
+  background-color: #1f2937;
+  color: #f9fafb;
+  border-color: #4b5563;
+}
+
+html.dark input::placeholder,
+html.dark textarea::placeholder {
+  color: #9ca3af;
+}
+
+html.dark select option {
+  background-color: #1f2937;
+  color: #f9fafb;
+}
+
+
+/* =========================================================
+   SELECTION
+========================================================= */
+
+::selection {
+  background-color: #bbf7d0;
+  color: #14532d;
+}
+
+html.dark ::selection {
+  background-color: #166534;
+  color: #f0fdf4;
+}
+
+
+/* =========================================================
+   CATEGORIES
+========================================================= */
+
+.categories {
+  padding: 80px 8%;
+  background: var(--page-bg);
+}
+
+.categories h2 {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+  color: var(--text-primary);
+}
+
+.categories p {
+  text-align: center;
+  color: var(--text-secondary);
+  margin-bottom: 50px;
+}
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(170px, 1fr)
+  );
+  gap: 25px;
+}
+
+
+/* Category card */
+
+.category-card {
+  width: 100%;
+  background: var(--surface);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+
+  border-radius: 18px;
+  padding: 35px 10px;
+
+  text-align: center;
+
+  box-shadow:
+    0 10px 20px var(--shadow-color);
+
+  transition:
+    transform 0.3s ease,
+    background-color 0.35s ease,
+    border-color 0.35s ease,
+    box-shadow 0.35s ease,
+    color 0.25s ease;
+
+  cursor: pointer;
+}
+
+
+/* Hover */
+
+.category-card:hover {
+  transform: translateY(-8px);
+
+  box-shadow:
+    0 15px 30px var(--shadow-color);
+}
+
+
+/* Active category */
+
+.category-active {
+  transform: translateY(-8px);
+
+  border: 2px solid #22c55e;
+
+  box-shadow:
+    0 12px 25px rgba(34, 197, 94, 0.2);
+}
+
+.category-active .category-icon {
+  transform: scale(1.08);
+}
+
+.category-active h3 {
+  color: #16a34a;
+}
+
+
+/* Dark active category */
+
+html.dark .category-active {
+  background: #172a20;
+  border-color: #4ade80;
+
+  box-shadow:
+    0 12px 30px rgba(34, 197, 94, 0.15);
+}
+
+html.dark .category-active h3 {
+  color: #4ade80;
+}
+
+
+/* Icon */
+
+.category-icon {
+  font-size: 3rem;
+  color: #22c55e;
+  margin-bottom: 15px;
+
+  transition:
+    transform 0.3s ease,
+    color 0.25s ease;
+}
+
+.category-card:hover .category-icon {
+  transform:
+    rotate(-8deg)
+    scale(1.15);
+}
+
+
+/* Category title */
+
+.category-card h3 {
+  margin-bottom: 10px;
+  color: var(--text-primary);
+
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+
+/* Category recipe count text */
+
+.category-card span {
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+
+/* =========================================================
+   RECIPE BADGE
+========================================================= */
+
+.recipe-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  margin-top: 12px;
+
+  padding: 6px 14px;
+
+  background: #e8f8ec;
+  color: #166534;
+
+  border-radius: 30px;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  transition:
+    background-color 0.35s ease,
+    color 0.25s ease;
+}
+
+html.dark .recipe-badge {
+  background: #163523;
+  color: #86efac;
+}
+
+
+/* Empty category badge */
+
+.category-card.opacity-50 .recipe-badge {
+  background: #f3f4f6;
+  color: #4b5563;
+}
+
+html.dark .category-card.opacity-50 .recipe-badge {
+  background: #374151;
+  color: #d1d5db;
+}
+
+
+/* Badge dot */
+
+.dot {
+  width: 10px;
+  height: 10px;
+
+  background: #22c55e;
+
+  border-radius: 50%;
+
+  flex-shrink: 0;
+}
+
+
+/* =========================================================
+   RECIPE CARDS
+========================================================= */
+
+.recipe-card {
+  background: var(--surface);
+  color: var(--text-primary);
+
+  border: 1px solid var(--border);
+
+  box-shadow:
+    0 8px 20px var(--shadow-color);
+}
+
+
+/* Recipe card title */
+
+.recipe-card-title {
+  color: var(--text-primary);
+}
+
+
+/* Recipe card secondary text */
+
+.recipe-card-secondary {
+  color: var(--text-muted);
+}
+
+
+/* =========================================================
+   GENERAL LINKS / GREEN BRAND
+========================================================= */
+
+.text-brand-green {
+  color: #16a34a;
+}
+
+html.dark .text-brand-green {
+  color: #4ade80;
+}
+
+
+/* =========================================================
+   ANIMATIONS
+========================================================= */
+
+@keyframes fadeMenu {
+  from {
+    opacity: 0;
+    transform:
+      translateY(-8px)
+      scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform:
+      translateY(0)
+      scale(1);
+  }
+}
+
+.animate-fade {
+  animation:
+    fadeMenu 0.18s ease;
+}
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform:
+      translateY(-8px)
+      scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform:
+      translateY(0)
+      scale(1);
+  }
+}
+
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform:
+      translateY(0)
+      scale(1);
+  }
+
+  to {
+    opacity: 0;
+    transform:
+      translateY(-8px)
+      scale(0.98);
+  }
+}
+
+
+#category-recipes {
+  scroll-margin-top: 50px;
+}
+
+
+/* =========================================================
+   PRINT RECIPE
+========================================================= */
+
+/* Hide printable recipe during normal browsing */
+
+.print-recipe {
+  display: none;
+}
+
+
+/* =========================================================
+   PRINT MODE
+========================================================= */
+
+@media print {
+
+  #root {
+  padding-top: 0;
+}
+
+  @page {
+    size: A4;
+    margin: 15mm;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background: white !important;
+  }
+
+  .screen-content {
+    display: none !important;
+  }
+
+  .print-recipe {
+    display: block !important;
+    width: 100%;
+    max-width: 100%;
+
+    background: white;
+    color: #222;
+
+    font-family:
+      Arial,
+      Helvetica,
+      sans-serif;
+  }
+
+
+  /* =======================================================
+     HEADER
+  ======================================================= */
+
+  .print-header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding-bottom: 10px;
+
+    border-bottom:
+      1px solid #ddd;
+  }
+
+  .print-brand {
+    color: #16a34a;
+
+    font-size: 18px;
+    font-weight: bold;
+
+    margin-bottom: 12px;
+
+    letter-spacing: 0.5px;
+  }
+
+  .print-header h1 {
+    font-size: 36px;
+    line-height: 1.2;
+
+    margin:
+      0 0 15px;
+
+    color: #111;
+  }
+
+  .print-description {
+    max-width: 700px;
+    margin: 0 auto;
+
+    color: #555;
+
+    line-height: 1.6;
+    font-size: 14px;
+  }
+
+
+  /* =======================================================
+     IMAGE
+  ======================================================= */
+
+  .print-image {
+    display: block;
+
+    width: 100%;
+    max-width: 760px;
+    height: 360px;
+
+    object-fit: cover;
+
+    margin:
+      0 auto 30px;
+
+    border-radius: 12px;
+
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+
+  /* =======================================================
+     RECIPE INFO
+  ======================================================= */
+
+  .print-info {
+    display: grid;
+    grid-template-columns:
+      repeat(3, 1fr);
+
+    border-top:
+      1px solid #ddd;
+
+    border-bottom:
+      1px solid #ddd;
+
+    margin-bottom: 30px;
+  }
+
+  .print-info > div {
+    padding: 12px;
+
+    border-right:
+      1px solid #ddd;
+  }
+
+  .print-info > div:nth-child(3n) {
+    border-right: none;
+  }
+
+  .print-info strong {
+    display: block;
+
+    font-size: 12px;
+
+    color: #666;
+
+    margin-bottom: 4px;
+
+    text-transform: uppercase;
+  }
+
+  .print-info span {
+    display: block;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    color: #222;
+  }
+
+
+  /* =======================================================
+     SECTIONS
+  ======================================================= */
+
+  .print-section {
+    break-inside: avoid;
+    page-break-inside: avoid;
+
+    margin-top: 28px;
+  }
+
+  .print-section h2 {
+    break-after: avoid;
+    page-break-after: avoid;
+
+    font-size: 22px;
+
+    margin-bottom: 12px;
+
+    color: #111;
+
+    border-bottom:
+      2px solid #16a34a;
+
+    padding-bottom: 6px;
+  }
+
+  /* Dark mode override for print-section h2 */
+  html.dark .print-section h2 {
+    color: #f3f4f6;
+  }
+
+  .print-section ul,
+  .print-section ol {
+    margin: 0;
+    padding-left: 25px;
+  }
+
+  .print-section li {
+    break-inside: avoid;
+    page-break-inside: avoid;
+
+    margin-bottom: 9px;
+
+    line-height: 1.5;
+
+    font-size: 14px;
+  }
+
+
+  /* =======================================================
+     NUTRITION
+  ======================================================= */
+
+  .print-nutrition {
+    display: grid;
+
+    grid-template-columns:
+      repeat(2, 1fr);
+
+    gap: 8px 25px;
+  }
+
+  .print-nutrition div {
+    display: flex;
+
+    justify-content: space-between;
+
+    border-bottom:
+      1px solid #eee;
+
+    padding: 7px 0;
+
+    font-size: 14px;
+  }
+
+  .print-nutrition strong {
+    text-transform: capitalize;
+  }
+
+  /* Dark mode overrides for print-nutrition */
+  html.dark .print-nutrition div {
+    border-bottom: 1px solid #4b5563;
+  }
+
+  html.dark .print-nutrition strong {
+    color: #f3f4f6;
+  }
+
+  html.dark .print-nutrition span {
+    color: #d1d5db;
+  }
+
+
+  /* =======================================================
+     FOOTER
+  ======================================================= */
+
+  .print-footer {
+    margin-top: 40px;
+
+    padding-top: 15px;
+
+    border-top:
+      1px solid #ddd;
+
+    text-align: center;
+
+    color: #777;
+
+    font-size: 11px;
+  }
+}
+
+
+/* =========================================================
+   RECENTLY VIEWED
+========================================================= */
+
+@keyframes recentlyViewedFadeIn {
+  from {
+    opacity: 0;
+    transform:
+      translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform:
+      translateY(0);
+  }
+}
+
+.recently-viewed-item {
+  animation:
+    recentlyViewedFadeIn
+    0.3s ease-out both;
+}
+
+
+/* =========================================================
+   RECIPE OF THE DAY
+========================================================= */
+
+@keyframes recipeOfTheDayFadeIn {
+  from {
+    opacity: 0;
+    transform:
+      translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform:
+      translateY(0);
+  }
+}
+
+.recipe-of-the-day-card {
+  animation:
+    recipeOfTheDayFadeIn
+    0.6s ease-out both;
+}
+
+.recipe-of-the-day-loading {
+  animation:
+    recipeOfTheDayFadeIn
+    0.4s ease-out both;
+}
+
+.recipe-of-the-day-card img {
+  transition:
+    transform 0.5s ease,
+    filter 0.3s ease;
+}
+
+.recipe-of-the-day-card:hover img {
+  transform:
+    scale(1.03);
+}
+
+.recipe-of-the-day-card a {
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+
+/* =========================================================
+   MOBILE NAVIGATION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  #mobile-navigation-menu {
+    transition:
+      none !important;
+  }
+
+  .recipe-of-the-day-card,
+  .recipe-of-the-day-loading {
+    animation: none;
+  }
+
+  .recipe-of-the-day-card img,
+  .recipe-of-the-day-card a {
+    transition: none;
+  }
+
+  .recipe-of-the-day-card:hover img {
+    transform: none;
+  }
+
+  .category-card,
+  .category-icon {
+    transition: none;
+  }
+}
+
+
+/* =========================================================
+   DARK MODE — NAVBAR THEME TOGGLE
+========================================================= */
+
+.theme-toggle-desktop {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+
+  gap: 7px;
+
+  height: 38px;
+
+  padding: 4px 7px;
+
+  border-radius: 999px;
+
+  border:
+    1px solid #d1d5db;
+
+  cursor: pointer;
+
+  overflow: hidden;
+
+  transition:
+    background-color 0.35s ease,
+    border-color 0.35s ease,
+    box-shadow 0.35s ease,
+    transform 0.2s ease;
+}
+
+.theme-toggle-desktop:hover {
+  transform:
+    translateY(-1px);
+}
+
+.theme-toggle-desktop:active {
+  transform:
+    scale(0.95);
+}
+
+.theme-toggle-light {
+  background: #f9fafb;
+  border-color: #d1d5db;
+}
+
+.theme-toggle-dark {
+  background: #111827;
+  border-color: #4b5563;
+
+  box-shadow:
+    0 0 14px
+    rgba(96, 165, 250, 0.15);
+}
+
+.theme-toggle-desktop-icon {
+  width: 18px;
+  height: 18px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 13px;
+
+  transition:
+    transform 0.45s ease,
+    opacity 0.3s ease;
+}
+
+.theme-toggle-light
+.theme-toggle-desktop-icon:first-child {
+  color: #b45309;
+}
+
+.theme-toggle-light
+.theme-toggle-desktop-icon:last-child {
+  color: #6b7280;
+}
+
+.theme-toggle-dark
+.theme-toggle-desktop-icon:first-child {
+  color: #6b7280;
+}
+
+.theme-toggle-dark
+.theme-toggle-desktop-icon:last-child {
+  color: #c4b5fd;
+}
+
+.theme-toggle-desktop:hover
+.theme-toggle-desktop-icon {
+  transform:
+    rotate(12deg);
+}
+
+.theme-toggle-track {
+  position: relative;
+
+  width: 42px;
+  height: 24px;
+
+  border-radius: 999px;
+
+  background: #d1d5db;
+
+  display: flex;
+  align-items: center;
+
+  padding: 2px;
+
+  transition:
+    background-color 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+.theme-toggle-dark
+.theme-toggle-track {
+  background: #374151;
+
+  box-shadow:
+    inset 0 0 8px
+    rgba(0, 0, 0, 0.25);
+}
+
+.theme-toggle-knob {
+  width: 20px;
+  height: 20px;
+
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #ffffff;
+
+  color: #b45309;
+
+  font-size: 10px;
+
+  box-shadow:
+    0 2px 5px
+    rgba(0, 0, 0, 0.2);
+
+  transform:
+    translateX(0);
+
+  transition:
+    transform 0.4s
+      cubic-bezier(
+        0.4,
+        0,
+        0.2,
+        1
+      ),
+    background-color 0.35s ease,
+    color 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+.theme-toggle-knob-dark {
+  transform:
+    translateX(18px);
+
+  background: #1f2937;
+
+  color: #c4b5fd;
+
+  box-shadow:
+    0 0 10px
+    rgba(196, 181, 253, 0.35);
+}
+
+
+/* =========================================================
+   MOBILE THEME TOGGLE
+========================================================= */
+
+.theme-toggle-mobile {
+  min-height: 52px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 10px 14px;
+
+  border-radius: 14px;
+
+  border:
+    1px solid #e5e7eb;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.35s ease,
+    border-color 0.35s ease,
+    transform 0.2s ease,
+    box-shadow 0.35s ease;
+}
+
+.theme-toggle-mobile:hover {
+  transform:
+    translateY(-1px);
+}
+
+.theme-toggle-mobile:active {
+  transform:
+    scale(0.98);
+}
+
+.theme-toggle-mobile-icon {
+  width: 34px;
+  height: 34px;
+
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition:
+    transform 0.45s ease,
+    background-color 0.35s ease,
+    color 0.35s ease;
+}
+
+.theme-toggle-light
+.theme-toggle-mobile-icon {
+  background: #fef3c7;
+  color: #b45309;
+}
+
+.theme-toggle-dark
+.theme-toggle-mobile-icon {
+  background: #312e81;
+  color: #c4b5fd;
+
+  transform:
+    rotate(180deg);
+}
+
+.theme-toggle-switch {
+  width: 48px;
+  height: 27px;
+
+  padding: 2px;
+
+  border-radius: 999px;
+
+  display: flex;
+  align-items: center;
+
+  background: #d1d5db;
+
+  transition:
+    background-color 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+.theme-toggle-dark
+.theme-toggle-switch {
+  background: #374151;
+
+  box-shadow:
+    inset 0 0 8px
+    rgba(0, 0, 0, 0.25);
+}
+
+.theme-toggle-mobile
+.theme-toggle-knob {
+  width: 23px;
+  height: 23px;
+
+  font-size: 11px;
+}
+
+.theme-toggle-mobile
+.theme-toggle-knob-dark {
+  transform:
+    translateX(21px);
+}
+
+/* =========================================================
+   FIXED NAVBAR PAGE OFFSET
+========================================================= */
+
+#root {
+  padding-top: 80px;
+}
