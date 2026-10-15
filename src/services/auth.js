@@ -11,6 +11,7 @@ import {
   browserSessionPersistence,
   createUserWithEmailAndPassword,
   GoogleAuthProvider,
+  sendEmailVerification,
   sendPasswordResetEmail,
   setPersistence,
   signInWithEmailAndPassword,
@@ -71,9 +72,83 @@ export async function loginWithEmail(
     email,
     password
   );
-  await syncPublicUserProfile(result.user);
-  return result.user;
+
+  const user = result.user;
+
+  await user.reload();
+
+  if (!user.emailVerified) {
+    await signOut(auth);
+
+    const error = new Error(
+      "Please verify your email address before signing in. Check your inbox for the verification link."
+    );
+
+    error.code = "auth/email-not-verified";
+
+    throw error;
+  }
+
+  const userRef = doc(db, "users", user.uid);
+  const userSnap = await getDoc(userRef);
+
+  if (!userSnap.exists()) {
+    await setDoc(userRef, {
+      uid: user.uid,
+      displayName: user.displayName || "",
+      email: user.email,
+      photoURL: user.photoURL || "",
+      createdAt: serverTimestamp(),
+      role: "user",
+      recipesCreated: 0,
+      favorites: [],
+      recentlyViewed: [],
+      guestImported: false,
+    });
+  }
+
+  await syncPublicUserProfile(user);
+
+  return user;
 }
+
+
+export async function resendVerificationEmail(
+  email,
+  password,
+  rememberMe = true
+) {
+  await setAuthPersistence(rememberMe);
+
+  const result = await signInWithEmailAndPassword(
+    auth,
+    email,
+    password
+  );
+
+  const user = result.user;
+
+  try {
+    await user.reload();
+
+    if (user.emailVerified) {
+      const error = new Error(
+        "This email address is already verified. You can log in normally."
+      );
+
+      error.code = "auth/email-already-verified";
+      throw error;
+    }
+
+    await sendEmailVerification(user);
+  } finally {
+    await signOut(auth);
+  }
+
+  return true;
+}
+
+
 export async function registerWithEmail(
   email,
   password,
@@ -81,35 +156,28 @@ export async function registerWithEmail(
 ) {
   await setAuthPersistence(rememberMe);
 
-  const result =
-    await createUserWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
+  const result = await createUserWithEmailAndPassword(
+    auth,
+    email,
+    password
+  );
 
   const user = result.user;
 
-  const userRef = doc(
-    db,
-    "users",
-    user.uid
-  );
+  try {
+    await sendEmailVerification(user);
+  } catch (error) {
+    // The account may already exist even if email delivery fails.
+    await signOut(auth);
+    throw error;
+  }
 
-  await setDoc(userRef, {
-    uid: user.uid,
-    displayName: user.displayName || "",
+  await signOut(auth);
+
+  return {
     email: user.email,
-    photoURL: user.photoURL || "",
-    createdAt: serverTimestamp(),
-    role: "user",
-    recipesCreated: 0,
-    favorites: [],
-    recentlyViewed: [],
-    guestImported: false,
-  });
-  await syncPublicUserProfile(user);
-  return user;
+    verificationEmailSent: true,
+  };
 }
 export async function resetPassword(email) {
   await sendPasswordResetEmail(auth, email);

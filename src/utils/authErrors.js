@@ -17,6 +17,9 @@ export function getAuthErrorMessage(error) {
     case "auth/email-already-in-use":
       return "An account with this email already exists.";
 
+      case "auth/email-not-verified":
+        return "Your email address hasn't been verified yet. Please check your inbox and click the verification link before signing in.";
+
     case "auth/weak-password":
       return "Your password is too weak. Please choose a stronger password.";
 

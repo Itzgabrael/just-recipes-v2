@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { auth } from "../services/firebase";
-import { onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged,} from "firebase/auth";
 
 const AuthContext = createContext();
 
@@ -20,56 +20,29 @@ export function AuthProvider({ children }) {
   ========================================================
   */
 
-  useEffect(() => {
-
-    const unsubscribe =
-      onAuthStateChanged(
-        auth,
-        async (user) => {
-
-          /*
-          ==================================================
-          USER SIGNED IN
-          ==================================================
-          */
-
-         if (user) {
-
-  setCurrentUser(user);
-
-} else {
-
-  /*
-  ==================================================
-  USER SIGNED OUT
-  ==================================================
-  */
-
-  setCurrentUser(null);
-
-}
-
-          /*
-          ==================================================
-          AUTH CHECK FINISHED
-          ==================================================
-          */
-
-          setLoading(false);
-
-        }
+  
+useEffect(() => {
+  const unsubscribe = onAuthStateChanged(auth, (user) => {
+    if (user) {
+      const isGoogleUser = user.providerData.some(
+        (provider) => provider.providerId === "google.com"
       );
 
+      if (user.emailVerified || isGoogleUser) {
+        setCurrentUser(user);
+      } else {
+        setCurrentUser(null);
+      }
+    } else {
+      setCurrentUser(null);
+    }
 
-    /*
-    ======================================================
-    CLEAN UP FIREBASE AUTH LISTENER
-    ======================================================
-    */
+    setLoading(false);
+  });
 
-    return unsubscribe;
+  return unsubscribe;
+}, []);
 
-  }, []);
 
 
   /*

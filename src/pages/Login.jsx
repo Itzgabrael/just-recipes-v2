@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import {FaUtensils} from "react-icons/fa";
 
-import { loginWithEmail, resetPassword, signInWithGoogle } from "../services/auth";
+import { loginWithEmail, resetPassword, resendVerificationEmail, signInWithGoogle } from "../services/auth";
 import { getAuthErrorMessage } from "../utils/authErrors";
 import toast from "react-hot-toast";
 
@@ -13,6 +13,7 @@ function Login() {
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
   const [isLoginLoading, setIsLoginLoading] = useState(false);
   const [isResetLoading, setIsResetLoading] = useState(false);
+  const [isResendLoading, setIsResendLoading] = useState(false);
   const [rememberMe, setRememberMe] = useState(true);
 
 const navigate = useNavigate();
@@ -74,6 +75,53 @@ const handleLogin = async () => {
     setIsLoginLoading(false);
   }
 };
+
+const handleResendVerification = async () => {
+  if (
+    isResendLoading ||
+    isLoginLoading ||
+    isGoogleLoading ||
+    isResetLoading
+  ) {
+    return;
+  }
+
+  const trimmedEmail = email.trim();
+
+  if (!trimmedEmail || !password) {
+    toast.error(
+      "Enter the email address and password for your unverified account."
+    );
+    return;
+  }
+
+  try {
+    setIsResendLoading(true);
+
+    await resendVerificationEmail(
+      trimmedEmail,
+      password,
+      rememberMe
+    );
+
+    toast.success(
+      "Verification email sent. Check your inbox and spam folder."
+    );
+  } catch (error) {
+    console.error("Resend verification error:", error);
+
+    if (error?.code === "auth/email-already-verified") {
+      toast.success(error.message);
+      return;
+    }
+
+    toast.error(getAuthErrorMessage(error));
+  } finally {
+    setIsResendLoading(false);
+  }
+};
+
+
 const handleForgotPassword = async () => {
   if (isResetLoading || isLoginLoading || isGoogleLoading) return;
 
@@ -143,6 +191,22 @@ const handleForgotPassword = async () => {
   </>
 )}
         </button>
+
+        <button
+  type="button"
+  onClick={handleResendVerification}
+  disabled={
+    isResendLoading ||
+    isLoginLoading ||
+    isGoogleLoading ||
+    isResetLoading
+  }
+  className="w-full mt-3 border border-green-600 text-green-700 py-3 rounded-lg hover:bg-green-50 transition disabled:opacity-60 disabled:cursor-not-allowed"
+>
+  {isResendLoading
+    ? "Sending verification email..."
+    : "Resend Verification Email"}
+</button>
 
         <div className="flex items-center my-8">
 

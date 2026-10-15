@@ -27,6 +27,7 @@ function Register() {
   const [rememberMe, setRememberMe] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [ verificationSent, setVerificationSent] = useState(false);
 
   const handleEmailSignup = async (event) => {
   event.preventDefault();
@@ -56,13 +57,15 @@ function Register() {
   try {
     setLoading(true);
 
-    await registerWithEmail(
-      email.trim(),
-      password,
-      rememberMe
-    );
+    const result = await registerWithEmail(
+  email.trim(),
+  password,
+  rememberMe
+);
 
-    void navigate("/");
+if (result.verificationEmailSent) {
+  setVerificationSent(true);
+}
   } catch (error) {
     console.error("Registration error:", error);
 
@@ -113,10 +116,40 @@ function Register() {
       </div>
     )}
 
-    <form
-      onSubmit={handleEmailSignup}
-      className="space-y-4"
+    {verificationSent && (
+      <output
+        className="mb-5 rounded-lg border border-green-200 bg-green-50 px-4 py-4"
+      >
+    <h2 className="font-semibold text-green-800">
+      Check your email
+    </h2>
+
+    <p className="mt-2 text-sm text-green-700">
+      We've sent a verification link to{" "}
+      <strong>{email.trim()}</strong>.
+      Open the email and click the link to verify
+      your address before logging in.
+    </p>
+
+    <p className="mt-2 text-sm text-green-700">
+      If you don't see the email, check your spam
+      or junk folder.
+    </p>
+
+    <button
+      type="button"
+      onClick={() => navigate("/login")}
+      className="mt-4 font-semibold text-green-700 underline"
     >
+      Go to Login
+    </button>
+  </output>
+)}
+
+    {!verificationSent && (
+  <form
+    onSubmit={handleEmailSignup}
+    className="space-y-4">
       <div>
         <label
           htmlFor="register-email"
@@ -204,6 +237,7 @@ function Register() {
           : "Create Account"}
       </button>
     </form>
+    )}
 
     <div className="flex items-center gap-3 my-6">
       <div className="flex-1 h-px bg-gray-200" />
