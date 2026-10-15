@@ -78,20 +78,25 @@ function RecipeCard({ recipe, ratingSummary }) {
   ===================================================== */
 
   return (
-    <div
-      className="
-        recipe-card
-        bg-white
-        dark:bg-gray-800
-        rounded-xl
-        overflow-hidden
-        border
-        border-gray-200
-        dark:border-gray-700
-        shadow
-        hover:shadow-lg
-        dark:hover:shadow-black/30
-        transition">
+
+  <div
+    className="
+      recipe-card
+      bg-white
+      dark:bg-gray-800
+      rounded-xl
+      overflow-hidden
+      border
+      border-gray-200
+      dark:border-gray-700
+      shadow
+      hover:shadow-lg
+      dark:hover:shadow-black/30
+      transition">
+    <Link
+      to={`/recipe/${recipe.id}`}
+      aria-label={`View recipe: ${recipe.title || recipe.recipeName || "Recipe"}`}
+      className="block focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600">
 
 {/* Recipe Image */}
 
@@ -226,6 +231,9 @@ function RecipeCard({ recipe, ratingSummary }) {
           </p>
         )}
 
+      </div>
+        </Link>
+
 
         {/* Actions */}
 
@@ -236,6 +244,7 @@ function RecipeCard({ recipe, ratingSummary }) {
             items-center
             gap-3
             mt-5
+            pt-0
           "
         >
 
@@ -262,28 +271,23 @@ function RecipeCard({ recipe, ratingSummary }) {
           {/* View Recipe */}
 
           <Link
-            to={`/recipe/${recipe.id}`}
-          >
-            <button
-              type="button"
-              className="
-                bg-green-600
-                text-white
-                px-4
-                py-2
-                rounded-lg
-                hover:bg-green-700
-                dark:hover:bg-green-500
-                transition
-              "
-            >
-              View Recipe
-            </button>
-          </Link>
+  to={`/recipe/${recipe.id}`}
+  className="
+    bg-green-600
+    text-white
+    px-4
+    py-2
+    rounded-lg
+    hover:bg-green-700
+    dark:hover:bg-green-500
+    transition
+  "
+>
+  View Recipe
+</Link>
 
         </div>
       </div>
-    </div>
   );
 }
 

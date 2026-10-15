@@ -155,21 +155,26 @@ const { currentUser } = useAuth();
   */
 
   return (
-
     <div
-  className="
-    bg-white
-    dark:bg-gray-800
-    text-gray-900
-    dark:text-gray-100
-    rounded-xl
-    shadow
-    hover:shadow-lg
-    dark:hover:shadow-black/30
-    transition
-    relative
-    overflow-visible
-  ">
+      className="
+        bg-white
+        dark:bg-gray-800
+        text-gray-900
+        dark:text-gray-100
+        rounded-xl
+        shadow
+        hover:shadow-lg
+        dark:hover:shadow-black/30
+        transition
+        relative
+        overflow-visible
+      "
+    >
+    <Link
+  to={`/recipe/${recipe.id}`}
+  aria-label={`View recipe: ${recipe.title || recipe.recipeName || "Recipe"}`}
+  className="block focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600">
+
             <img
         src={recipe.image || "/default-food.jpg"}
         alt={recipe.title || recipe.recipeName || "Recipe"}
@@ -221,9 +226,11 @@ const { currentUser } = useAuth();
     Saved to your account
   </p>
 )}
+</div>
+</Link>
 
 
-        <div className="flex justify-between items-center mt-6">
+        <div className="flex justify-between items-center gap-3 p-5 pt-0 mt-1">
 
 
           <Link
@@ -340,10 +347,6 @@ const { currentUser } = useAuth();
 
 
         </div>
-
-
-      </div>
-
 
       {/* =================================================
           DELETE MODAL
