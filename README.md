@@ -85,23 +85,14 @@ Deployment & Tooling
 - Vite PWA Plugin
 - ESLint
 
-Architecture
+Architecture:
 
 Just Recipes uses Firebase for authentication and application data, while Supabase Storage handles user-uploaded profile and recipe images.
-
-React Application
-       |
-       |-- Firebase Authentication
-       |       |-- User accounts and authentication
-       |
-       |-- Firestore
-       |       |-- Users, recipes, favorites, and ratings
-       |
-       |-- Supabase Storage
-       |       |-- Profile and recipe images
-       |
-       |-- TheMealDB API
-               |-- External recipe data
+The application integrates the following services:
+Firebase Authentication: Manages user registration, login, email verification, and authentication.
+Cloud Firestore: Stores user profiles, recipes, favorites, and other application data.
+Supabase Storage: Stores uploaded profile photos and recipe images, with access controlled through Row Level Security (RLS).
+TheMealDB API: Provides external recipe data for discovery.
 
 Guest-created recipes are stored locally using browser "localStorage", while authenticated users can save recipes to their account.
 
