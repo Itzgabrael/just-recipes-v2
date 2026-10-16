@@ -223,4 +223,4 @@ Future Improvements
 
 Potential future improvements include further performance optimization, additional recipe discovery features, and continued refinement of the user experience based on real-world feedback.
 
-"GitHub" (https://github.com/itzgabriel)
+"GitHub" (https://github.com/Itzgabrael)
