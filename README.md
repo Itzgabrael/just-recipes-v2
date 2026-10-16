@@ -90,8 +90,8 @@ Architecture
 Just Recipes uses Firebase for authentication and application data while Supabase Storage handles user-uploaded profile and recipe images.
 
 React Application
-       │
 
+       │
        ├── Firebase Authentication
 
        │       └── User accounts & authentication
