@@ -155,17 +155,26 @@ Build for Production
 
 npm run build
 
-Project Structure
+Project Structure:
 
 src/
+
 ├── assets/
+
 ├── components/
+
 ├── context/
+
 ├── data/
+
 ├── hooks/
+
 ├── layouts/
+
 ├── pages/
+
 ├── services/
+
 └── utils/
 
 admin-tools/
