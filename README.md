@@ -87,21 +87,21 @@ Deployment & Tooling
 
 Architecture
 
-Just Recipes uses Firebase for authentication and application data while Supabase Storage handles user-uploaded profile and recipe images.
+Just Recipes uses Firebase for authentication and application data, while Supabase Storage handles user-uploaded profile and recipe images.
 
 React Application
-       │
-       ├── Firebase Authentication
-       │       └── User accounts & authentication
-       │
-       ├── Firestore
-       │       └── Users, recipes, favorites & ratings
-       │
-       ├── Supabase Storage
-       │       └── Profile & recipe images
-       │
-       └── TheMealDB
-               └── External recipe data
+       |
+       |-- Firebase Authentication
+       |       |-- User accounts and authentication
+       |
+       |-- Firestore
+       |       |-- Users, recipes, favorites, and ratings
+       |
+       |-- Supabase Storage
+       |       |-- Profile and recipe images
+       |
+       |-- TheMealDB API
+               |-- External recipe data
 
 Guest-created recipes are stored locally using browser "localStorage", while authenticated users can save recipes to their account.
 
