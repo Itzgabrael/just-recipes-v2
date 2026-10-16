@@ -137,7 +137,8 @@ Installation
 
 Clone the repository and install the dependencies:
 
-git clone https://github.com/itzgabriel/just-recipes-v2.git
+git clone https://github.com/Itzgabrael/just-recipes-v2.git
+
 cd just-recipes-v2
 npm install
 
