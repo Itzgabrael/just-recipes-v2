@@ -178,6 +178,7 @@ src/
 └── utils/
 
 admin-tools/
+
 └── set-authenticated-role.cjs
 
 The application is organized into reusable components, pages, services, context providers, hooks, and utility modules to keep responsibilities separated and maintainable.
